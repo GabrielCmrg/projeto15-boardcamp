@@ -11,5 +11,10 @@ customersRoutes.post(
   customersMiddlewares.verifyExistingCustomerCPF,
   customersController.registerNewCustomer
 );
+customersRoutes.get(
+  '/customers',
+  customersMiddlewares.verifyQueries,
+  customersController.retrieveAllCustomers
+);
 
 export default customersRoutes;

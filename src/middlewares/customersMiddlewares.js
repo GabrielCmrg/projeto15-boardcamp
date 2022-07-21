@@ -23,3 +23,17 @@ export const verifyExistingCustomerCPF = async (req, res, next) => {
   next();
   return true;
 };
+
+export const verifyQueries = (req, res, next) => {
+  const { cpf } = req.query;
+  const validation = customersModel.cpfQuerySchema.validate(cpf);
+  if (validation.error) {
+    res.locals.cpf = '';
+    next();
+    return true;
+  }
+
+  res.locals.cpf = validation.value;
+  next();
+  return true;
+};
