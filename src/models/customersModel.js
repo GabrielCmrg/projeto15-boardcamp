@@ -46,3 +46,11 @@ export const getCustomers = async (cpf) => {
   );
   return customers;
 };
+
+export const getCustomerById = async (customerId) => {
+  const { rows: customer } = await connection.query(
+    'SELECT * FROM customers WHERE id = $1',
+    [customerId]
+  );
+  return customer[0];
+};

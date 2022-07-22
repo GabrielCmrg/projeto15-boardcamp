@@ -16,5 +16,10 @@ customersRoutes.get(
   customersMiddlewares.verifyQueries,
   customersController.retrieveAllCustomers
 );
+customersRoutes.get(
+  '/customers/:customerId',
+  customersMiddlewares.verifyParams,
+  customersController.retrieveCustomer
+);
 
 export default customersRoutes;

@@ -37,3 +37,15 @@ export const verifyQueries = (req, res, next) => {
   next();
   return true;
 };
+
+export const verifyParams = (req, res, next) => {
+  const customerId = parseInt(req.params.customerId, 10);
+  if (Number.isNaN(customerId)) {
+    res.locals.customerId = 0;
+  } else {
+    res.locals.customerId = customerId;
+  }
+
+  next();
+  return true;
+};
