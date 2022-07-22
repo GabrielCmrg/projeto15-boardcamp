@@ -1,1 +1,2 @@
 export * as customersMiddlewares from './customersMiddlewares.js';
+export * as categoriesMiddlewares from './categoriesMiddlewares.js';
