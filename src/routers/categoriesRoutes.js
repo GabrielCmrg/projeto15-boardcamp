@@ -11,5 +11,6 @@ categoriesRoutes.post(
   categoriesMiddlewares.verifyExistingCategory,
   categoriesController.registerCategory
 );
+categoriesRoutes.get('/categories', categoriesController.retrieveAllCategories);
 
 export default categoriesRoutes;

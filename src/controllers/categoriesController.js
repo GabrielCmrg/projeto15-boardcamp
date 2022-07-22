@@ -12,3 +12,13 @@ export const registerCategory = async (req, res) => {
       .send('Algo deu errado ao tentar cadastrar a categoria.');
   }
 };
+
+export const retrieveAllCategories = async (req, res) => {
+  try {
+    const categories = await categoriesModel.getCategories();
+    return res.json(categories);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send('Algo deu errado ao buscar pelas categorias.');
+  }
+};

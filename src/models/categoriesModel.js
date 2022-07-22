@@ -18,3 +18,10 @@ export const createNewCategory = async (category) => {
   const { name } = category;
   await connection.query('INSERT INTO categories (name) VALUES ($1)', [name]);
 };
+
+export const getCategories = async () => {
+  const { rows: categories } = await connection.query(
+    'SELECT * FROM categories'
+  );
+  return categories;
+};
