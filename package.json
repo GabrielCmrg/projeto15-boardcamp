@@ -8,7 +8,9 @@
   "main": "src/app.js",
   "type": "module",
   "scripts": {
-    "start": "node src/app.js"
+    "start": "node src/app.js",
+    "recreatedb": "cd database-boardcamp/ && bash ./destroy-database && bash ./create-database && cd ..",
+    "connectdb": "cd database-boardcamp/ && bash ./connect-database && cd .."
   },
   "keywords": [],
   "author": "",
