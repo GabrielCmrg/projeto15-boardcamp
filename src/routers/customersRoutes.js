@@ -15,12 +15,14 @@ customersRoutes.post(
 customersRoutes.get(
   '/customers',
   customersMiddlewares.verifyQueries,
-  customersController.retrieveAllCustomers
+  customersController.retrieveAllCustomers,
+  customersMiddlewares.parseCustomers
 );
 customersRoutes.get(
   '/customers/:customerId',
   customersMiddlewares.verifyParams,
-  customersController.retrieveCustomer
+  customersController.retrieveCustomer,
+  customersMiddlewares.parseCustomer
 );
 customersRoutes.put(
   '/customers/:customerId',

@@ -55,3 +55,18 @@ export const verifyParams = (req, res, next) => {
   next();
   return true;
 };
+
+export const parseCustomer = (req, res) => {
+  const { customer } = res.locals;
+  customer.birthday = customer.birthday.toISOString().substring(0, 10);
+  return res.json(customer);
+};
+
+export const parseCustomers = (req, res) => {
+  const { customers } = res.locals;
+  const parsedCustomers = customers.map((customer) => ({
+    ...customer,
+    birthday: customer.birthday.toISOString().substring(0, 10),
+  }));
+  return res.json(parsedCustomers);
+};

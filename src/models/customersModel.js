@@ -1,6 +1,9 @@
-import joi from 'joi';
+import Joi from 'joi';
+import joiDate from '@joi/date';
 
 import { connection } from './index.js';
+
+const joi = Joi.extend(joiDate);
 
 export const customersSchema = joi.object({
   name: joi.string().trim().required(),
@@ -14,7 +17,7 @@ export const customersSchema = joi.object({
     .trim()
     .pattern(/[0-9]{11}/)
     .required(),
-  birthday: joi.date().required(),
+  birthday: joi.date().format('YYYY-MM-DD').raw().required(),
 });
 
 export const cpfQuerySchema = joi
