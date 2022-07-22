@@ -11,18 +11,20 @@ export const registerNewCustomer = async (req, res) => {
   }
 };
 
-export const retrieveAllCustomers = async (req, res) => {
+export const retrieveAllCustomers = async (req, res, next) => {
   const { cpf } = res.locals;
   try {
     const customers = await customersModel.getCustomers(cpf);
-    return res.json(customers);
+    res.locals.customers = customers;
+    next();
+    return true;
   } catch (error) {
     console.error(error);
     return res.status(500).send('Algo deu errado ao buscar os clientes.');
   }
 };
 
-export const retrieveCustomer = async (req, res) => {
+export const retrieveCustomer = async (req, res, next) => {
   const { customerId } = res.locals;
   try {
     const customer = await customersModel.getCustomerById(customerId);
@@ -32,7 +34,9 @@ export const retrieveCustomer = async (req, res) => {
         .send('O id informado não corresponde a um cliente.');
     }
 
-    return res.json(customer);
+    res.locals.customer = customer;
+    next();
+    return true;
   } catch (error) {
     console.error(error);
     return res.status(500).send('Algo deu errado ao buscar o cliente.');

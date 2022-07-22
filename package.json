@@ -1,16 +1,22 @@
 {
   "name": "projeto15-boardcamp",
   "version": "1.0.0",
+  "engines": {
+    "node": ">=16.15.1"
+  },
   "description": "",
   "main": "src/app.js",
   "type": "module",
   "scripts": {
-    "start": "node src/app.js"
+    "start": "node src/app.js",
+    "recreatedb": "cd database-boardcamp/ && bash ./destroy-database && bash ./create-database && cd ..",
+    "connectdb": "cd database-boardcamp/ && bash ./connect-database && cd .."
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@joi/date": "^2.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
