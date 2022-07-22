@@ -13,8 +13,9 @@ export const verifyCustomerInfos = (req, res, next) => {
 
 export const verifyExistingCustomerCPF = async (req, res, next) => {
   const { cpf } = res.locals.customer;
+  const { customerId } = res.locals;
   const existingCustomer = await customersModel.getCustomerByCPF(cpf);
-  if (existingCustomer) {
+  if (existingCustomer && existingCustomer.id !== customerId) {
     return res
       .status(409)
       .send('Já existe um cliente cadastrado com esse CPF.');

@@ -14,7 +14,7 @@ export const customersSchema = joi.object({
     .trim()
     .pattern(/[0-9]{11}/)
     .required(),
-  birthday: joi.date(),
+  birthday: joi.date().required(),
 });
 
 export const cpfQuerySchema = joi
@@ -53,4 +53,13 @@ export const getCustomerById = async (customerId) => {
     [customerId]
   );
   return customer[0];
+};
+
+export const replaceCustomerById = async (customer, customerId) => {
+  const { name, phone, cpf, birthday } = customer;
+  const result = await connection.query(
+    'UPDATE customers SET name = $1, phone = $2, cpf = $3, birthday = $4 WHERE id = $5',
+    [name, phone, cpf, birthday, customerId]
+  );
+  return result.rowCount;
 };

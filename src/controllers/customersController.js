@@ -21,3 +21,16 @@ export const retrieveCustomer = async (req, res) => {
 
   return res.json(customer);
 };
+
+export const updateCustomer = async (req, res) => {
+  const { customer, customerId } = res.locals;
+  const updated = await customersModel.replaceCustomerById(
+    customer,
+    customerId
+  );
+  if (updated) {
+    return res.send('Cadastro do cliente atualizado!');
+  }
+
+  return res.status(404).send('O id informado não corresponde a um cliente.');
+};
