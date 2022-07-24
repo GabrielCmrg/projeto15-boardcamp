@@ -34,3 +34,11 @@ export const getGames = async (name) => {
   );
   return games;
 };
+
+export const getGameById = async (gameId) => {
+  const { rows: game } = await connection.query(
+    'SELECT * FROM games WHERE id = $1',
+    [gameId]
+  );
+  return game[0];
+};
