@@ -10,3 +10,14 @@ export const registerNewGame = async (req, res) => {
     return res.status(500).send('Algo deu errado ao tentar cadastrar o jogo.');
   }
 };
+
+export const retrieveAllGames = async (req, res) => {
+  const { name } = res.locals;
+  try {
+    const games = await gamesModel.getGames(name);
+    return res.json(games);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send('Algo deu errado ao buscar pelos jogos.');
+  }
+};

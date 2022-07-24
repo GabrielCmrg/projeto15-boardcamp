@@ -12,5 +12,10 @@ gamesRoutes.post(
   gamesMiddlewares.verifyExistingGame,
   gamesController.registerNewGame
 );
+gamesRoutes.get(
+  '/games',
+  gamesMiddlewares.verifyQueries,
+  gamesController.retrieveAllGames
+);
 
 export default gamesRoutes;

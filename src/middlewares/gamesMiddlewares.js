@@ -42,3 +42,16 @@ export const verifyExistingGame = async (req, res, next) => {
     return res.status(500).send('Algo deu errado ao buscar pelo jogo.');
   }
 };
+
+export const verifyQueries = (req, res, next) => {
+  const { name } = req.query;
+  const validation = gamesModel.nameQuerySchema.validate(name);
+  if (validation.error) {
+    res.locals.name = '';
+  } else {
+    res.locals.name = validation.value;
+  }
+
+  next();
+  return true;
+};
