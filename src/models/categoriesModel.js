@@ -25,3 +25,11 @@ export const getCategories = async () => {
   );
   return categories;
 };
+
+export const getCategoryById = async (categoryId) => {
+  const { rows: category } = await connection.query(
+    'SELECT * FROM categories WHERE id = $1',
+    [categoryId]
+  );
+  return category[0];
+};
