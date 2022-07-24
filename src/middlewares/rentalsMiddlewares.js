@@ -38,7 +38,7 @@ export const verifyRelation = async (req, res, next) => {
 export const verifyStock = async (req, res, next) => {
   const { game } = res.locals;
   try {
-    const gameRentals = await rentalsModel.getRentals(game.id);
+    const gameRentals = await rentalsModel.getOpenRentals(game.id);
     if (game.stockTotal <= gameRentals.length) {
       return res.status(400).send('Não existe mais esse jogo em estoque.');
     }

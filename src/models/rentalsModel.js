@@ -38,3 +38,11 @@ export const getRentals = async (gameId) => {
   );
   return rentals;
 };
+
+export const getOpenRentals = async (gameId) => {
+  const { rows: rentals } = await connection.query(
+    'SELECT * FROM rentals WHERE "gameId" = $1 AND "returnDate" IS NULL',
+    [gameId]
+  );
+  return rentals;
+};
