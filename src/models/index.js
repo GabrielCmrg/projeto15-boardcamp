@@ -12,3 +12,4 @@ const connection = new Pool({
 export { connection };
 export * as customersModel from './customersModel.js';
 export * as categoriesModel from './categoriesModel.js';
+export * as gamesModel from './gamesModel.js';

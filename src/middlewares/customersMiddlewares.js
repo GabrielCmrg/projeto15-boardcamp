@@ -35,11 +35,10 @@ export const verifyQueries = (req, res, next) => {
   const validation = customersModel.cpfQuerySchema.validate(cpf);
   if (validation.error) {
     res.locals.cpf = '';
-    next();
-    return true;
+  } else {
+    res.locals.cpf = validation.value;
   }
 
-  res.locals.cpf = validation.value;
   next();
   return true;
 };
