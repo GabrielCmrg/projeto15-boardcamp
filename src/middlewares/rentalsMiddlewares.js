@@ -50,3 +50,17 @@ export const verifyStock = async (req, res, next) => {
     return res.status(500).send('Algo deu errado ao buscar os aluguéis.');
   }
 };
+
+export const verifyQueries = (req, res, next) => {
+  const { customerId, gameId } = req.query;
+  const customerValidation =
+    rentalsModel.customerIdQuerySchema.validate(customerId);
+  const gameValidation = rentalsModel.gameIdQuerySchema.validate(gameId);
+  res.locals.customerId = customerValidation.error
+    ? 0
+    : customerValidation.value;
+  res.locals.gameId = gameValidation.error ? 0 : gameValidation.value;
+
+  next();
+  return true;
+};

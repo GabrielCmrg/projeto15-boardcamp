@@ -12,5 +12,10 @@ rentalsRoutes.post(
   rentalsMiddlewares.verifyStock,
   rentalsController.makeRental
 );
+rentalsRoutes.get(
+  '/rentals',
+  rentalsMiddlewares.verifyQueries,
+  rentalsController.retrieveAllRentals
+);
 
 export default rentalsRoutes;

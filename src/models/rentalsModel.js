@@ -7,6 +7,9 @@ export const rentalSchema = joi.object({
   daysRented: joi.number().greater(0).required(),
 });
 
+export const customerIdQuerySchema = joi.number().greater(0).required();
+export const gameIdQuerySchema = joi.number().greater(0).required();
+
 export const createNewRental = async (rental) => {
   const {
     customerId,
@@ -31,10 +34,29 @@ export const createNewRental = async (rental) => {
   );
 };
 
-export const getRentals = async (gameId) => {
+export const getRentals = async (customerId, gameId) => {
+  const customer = customerId || 'ANY(SELECT "customerId" FROM rentals)';
+  const game = gameId || 'ANY(SELECT "gameId" FROM rentals)';
+
   const { rows: rentals } = await connection.query(
-    'SELECT * FROM rentals WHERE "gameId" = $1',
-    [gameId]
+    `
+      SELECT rentals.*, row_to_json(customer) AS customer, row_to_json(game) AS game
+      FROM rentals
+      JOIN (
+        SELECT id, name
+        FROM customers
+      ) AS customer
+      ON rentals."customerId" = customer.id
+      JOIN (
+        SELECT games.id, games.name, games."categoryId", categories.name AS "categoryName"
+        FROM games
+        JOIN categories
+        ON categories.id = games."categoryId"
+      ) AS game
+      ON rentals."gameId" = game.id
+      WHERE rentals."customerId" = ${customer}
+      AND rentals."gameId" = ${game}
+    `
   );
   return rentals;
 };

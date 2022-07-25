@@ -17,3 +17,14 @@ export const makeRental = async (req, res) => {
     return res.status(500).send('Algo deu errado ao criar o aluguel.');
   }
 };
+
+export const retrieveAllRentals = async (req, res) => {
+  const { customerId, gameId } = res.locals;
+  try {
+    const rentals = await rentalsModel.getRentals(customerId, gameId);
+    return res.json(rentals);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send('Algo deu errado ao buscar os aluguéis.');
+  }
+};
