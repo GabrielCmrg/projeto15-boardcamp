@@ -65,6 +65,18 @@ export const verifyQueries = (req, res, next) => {
   return true;
 };
 
+export const parseRentals = (req, res) => {
+  const { rentals } = res.locals;
+  const parsedRentals = rentals.map((rent) => ({
+    ...rent,
+    rentDate: rent.rentDate.toISOString().substring(0, 10),
+    returnDate: rent.returnDate
+      ? rent.returnDate.toISOString().substring(0, 10)
+      : rent.returnDate,
+  }));
+  return res.json(parsedRentals);
+};
+
 export const verifyParams = (req, res, next) => {
   const { rentalId } = req.params;
   const validation = rentalsModel.rentalIdParamSchema.validate(rentalId);

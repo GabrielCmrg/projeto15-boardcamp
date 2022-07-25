@@ -15,7 +15,8 @@ rentalsRoutes.post(
 rentalsRoutes.get(
   '/rentals',
   rentalsMiddlewares.verifyQueries,
-  rentalsController.retrieveAllRentals
+  rentalsController.retrieveAllRentals,
+  rentalsMiddlewares.parseRentals
 );
 rentalsRoutes.post(
   '/rentals/:rentalId/return',

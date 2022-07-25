@@ -18,11 +18,13 @@ export const makeRental = async (req, res) => {
   }
 };
 
-export const retrieveAllRentals = async (req, res) => {
+export const retrieveAllRentals = async (req, res, next) => {
   const { customerId, gameId } = res.locals;
   try {
     const rentals = await rentalsModel.getRentals(customerId, gameId);
-    return res.json(rentals);
+    res.locals.rentals = rentals;
+    next();
+    return true;
   } catch (error) {
     console.error(error);
     return res.status(500).send('Algo deu errado ao buscar os aluguéis.');
