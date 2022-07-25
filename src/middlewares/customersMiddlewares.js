@@ -33,23 +33,16 @@ export const verifyExistingCustomerCPF = async (req, res, next) => {
 export const verifyQueries = (req, res, next) => {
   const { cpf } = req.query;
   const validation = customersModel.cpfQuerySchema.validate(cpf);
-  if (validation.error) {
-    res.locals.cpf = '';
-  } else {
-    res.locals.cpf = validation.value;
-  }
+  res.locals.cpf = validation.error ? '' : validation.value;
 
   next();
   return true;
 };
 
 export const verifyParams = (req, res, next) => {
-  const customerId = parseInt(req.params.customerId, 10);
-  if (Number.isNaN(customerId)) {
-    res.locals.customerId = 0;
-  } else {
-    res.locals.customerId = customerId;
-  }
+  const { customerId } = req.params;
+  const validation = customersModel.customerIdParamSchema.validate(customerId);
+  res.locals.customerId = validation.error ? 0 : validation.value;
 
   next();
   return true;
