@@ -17,5 +17,12 @@ rentalsRoutes.get(
   rentalsMiddlewares.verifyQueries,
   rentalsController.retrieveAllRentals
 );
+rentalsRoutes.post(
+  '/rentals/:rentalId/return',
+  rentalsMiddlewares.verifyParams,
+  rentalsMiddlewares.verifyExistingRent,
+  rentalsMiddlewares.verifyClosedRent,
+  rentalsController.closeRent
+);
 
 export default rentalsRoutes;

@@ -64,3 +64,39 @@ export const verifyQueries = (req, res, next) => {
   next();
   return true;
 };
+
+export const verifyParams = (req, res, next) => {
+  const { rentalId } = req.params;
+  const validation = rentalsModel.rentalIdParamSchema.validate(rentalId);
+  res.locals.rentalId = validation.error ? 0 : validation.value;
+
+  next();
+  return true;
+};
+
+export const verifyExistingRent = async (req, res, next) => {
+  const { rentalId } = res.locals;
+  try {
+    const existingRent = await rentalsModel.getRentalById(rentalId);
+    if (!existingRent) {
+      return res.status(404).send('O aluguel informado não existe.');
+    }
+
+    res.locals.rent = existingRent;
+    next();
+    return true;
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send('Algo deu errado ao buscar os aluguéis.');
+  }
+};
+
+export const verifyClosedRent = (req, res, next) => {
+  const { rent } = res.locals;
+  if (rent.returnDate) {
+    return res.status(400).send('Esse aluguel já foi finalizado.');
+  }
+
+  next();
+  return true;
+};

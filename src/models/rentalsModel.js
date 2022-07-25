@@ -10,6 +10,8 @@ export const rentalSchema = joi.object({
 export const customerIdQuerySchema = joi.number().greater(0).required();
 export const gameIdQuerySchema = joi.number().greater(0).required();
 
+export const rentalIdParamSchema = joi.number().greater(0).required();
+
 export const createNewRental = async (rental) => {
   const {
     customerId,
@@ -67,4 +69,36 @@ export const getOpenRentals = async (gameId) => {
     [gameId]
   );
   return rentals;
+};
+
+export const getRentalById = async (rentalId) => {
+  const { rows: rental } = await connection.query(
+    'SELECT * FROM rentals WHERE id = $1',
+    [rentalId]
+  );
+  return rental[0];
+};
+
+export const replaceRent = async (rental) => {
+  const {
+    customerId,
+    gameId,
+    daysRented,
+    returnDate,
+    delayFee,
+    originalPrice,
+    rentDate,
+  } = rental;
+  await connection.query(
+    'UPDATE rentals SET "customerId" = $1, "gameId" = $2, "rentDate" = $3, "daysRented" = $4, "returnDate" = $5, "originalPrice" = $6, "delayFee" = $7',
+    [
+      customerId,
+      gameId,
+      rentDate,
+      daysRented,
+      returnDate,
+      originalPrice,
+      delayFee,
+    ]
+  );
 };
