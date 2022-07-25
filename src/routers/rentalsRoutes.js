@@ -24,5 +24,12 @@ rentalsRoutes.post(
   rentalsMiddlewares.verifyClosedRent,
   rentalsController.closeRent
 );
+rentalsRoutes.delete(
+  '/rentals/:rentalId',
+  rentalsMiddlewares.verifyParams,
+  rentalsMiddlewares.verifyExistingRent,
+  rentalsMiddlewares.verifyOpenRent,
+  rentalsController.clearRent
+);
 
 export default rentalsRoutes;

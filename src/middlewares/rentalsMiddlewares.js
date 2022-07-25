@@ -100,3 +100,13 @@ export const verifyClosedRent = (req, res, next) => {
   next();
   return true;
 };
+
+export const verifyOpenRent = (req, res, next) => {
+  const { rent } = res.locals;
+  if (!rent.returnDate) {
+    return res.status(400).send('Esse aluguel não foi finalizado.');
+  }
+
+  next();
+  return true;
+};

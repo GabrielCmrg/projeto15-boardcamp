@@ -102,3 +102,7 @@ export const replaceRent = async (rental) => {
     ]
   );
 };
+
+export const deleteRentById = async (rentalId) => {
+  await connection.query('DELETE FROM rentals WHERE id = $1', [rentalId]);
+};

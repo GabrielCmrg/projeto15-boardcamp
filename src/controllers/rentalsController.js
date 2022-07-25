@@ -52,3 +52,16 @@ export const closeRent = async (req, res) => {
     return res.status(500).send('Algo deu errado ao finalizar o aluguel');
   }
 };
+
+export const clearRent = async (req, res) => {
+  const { rentalId } = res.locals;
+  try {
+    await rentalsModel.deleteRentById(rentalId);
+    return res.send('Aluguel apagado!');
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .send('Algo deu errado ao apagar o registro do aluguel.');
+  }
+};
