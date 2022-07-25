@@ -41,7 +41,7 @@ export const verifyQueries = (req, res, next) => {
 
 export const verifyParams = (req, res, next) => {
   const { customerId } = req.params;
-  const validation = customersModel.customerIdQuerySchema.validate(customerId);
+  const validation = customersModel.customerIdParamSchema.validate(customerId);
   res.locals.customerId = validation.error ? 0 : validation.value;
 
   next();

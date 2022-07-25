@@ -26,7 +26,7 @@ export const cpfQuerySchema = joi
   .pattern(/[0-9]{1,11}/)
   .required();
 
-export const customerIdQuerySchema = joi.number().greater(0).required();
+export const customerIdParamSchema = joi.number().greater(0).required();
 
 export const createNewCustomer = async (customer) => {
   const { name, phone, cpf, birthday } = customer;
