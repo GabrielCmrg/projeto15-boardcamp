@@ -33,11 +33,7 @@ export const verifyExistingCustomerCPF = async (req, res, next) => {
 export const verifyQueries = (req, res, next) => {
   const { cpf } = req.query;
   const validation = customersModel.cpfQuerySchema.validate(cpf);
-  if (validation.error) {
-    res.locals.cpf = '';
-  } else {
-    res.locals.cpf = validation.value;
-  }
+  res.locals.cpf = validation.error ? '' : validation.value;
 
   next();
   return true;
